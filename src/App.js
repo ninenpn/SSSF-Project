@@ -1,18 +1,22 @@
 import React from 'react';
-import { Button, Flex } from 'antd';
 import './stylesheets/alignments.css';
 import './stylesheets/custom-components.css';
 import './stylesheets/form-elements.css';
 import './stylesheets/text-elements.css';
 import './stylesheets/theme.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Register from './pages/register';
+import Login from './pages/login';
 
 function App() {
   return (
-    <div className='bg-primary h-screen flex items-center justify-center'>
-      <h1>
-        SSSF Wallet
-      </h1>
-      <Button type="primary">Primary Button</Button>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login/>} />
+          <Route path="/register" element={<Register/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

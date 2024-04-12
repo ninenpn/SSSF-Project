@@ -11,6 +11,12 @@
 .w-50 {
   width: 50%;
 }
+.w-100 {
+  width: 100%;
+}
+.w-400 {
+  width: 400px;
+}
 
 /* Flex */
 .flex {
@@ -22,7 +28,7 @@
 .justify-center {
   justify-content: center;
 }
-.jussify-between {
+.justify-between {
   justify-content: space-between;
 }
 .justify-end {
@@ -50,6 +56,9 @@
 }
 .m-2 {
   margin: 20px;
+}
+.mt-2 {
+  margin-top: 20px;
 }
 .m-3 {
   margin: 30px;
