@@ -10,6 +10,8 @@ function Login() {
             const response = await LoginUsers(values);
             if(response.success) {
                 message.success(response.message);
+                localStorage.setItem("token", response.token);
+                window.location.href = "/";
             }
             else {
                 message.error(response.message);

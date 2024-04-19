@@ -7,6 +7,7 @@ import './stylesheets/theme.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Register from './pages/register';
 import Login from './pages/login';
+import Home from './pages/home';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<Register/>} />
+          <Route path="/" element={<Home/>} />
         </Routes>
       </BrowserRouter>
     </div>

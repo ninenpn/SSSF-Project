@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import User from '../models/userModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import middlewares from '../middlewares/authMiddleware';
 
 const router = express.Router();
 
@@ -120,5 +121,31 @@ router.post('/login', async (req: Request, res: Response) => {
       });
     }
   });
+
+// get user info
+router.post('/get-user-info', middlewares, async (req: Request, res: Response) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    if (user) {
+      user.password = '';
+      res.send({
+        message: 'User info retrieved successfully',
+        data: user,
+        success: true,
+      });
+    } else {
+      res.send({
+        message: 'User not found',
+        success: false,
+      });
+    }
+  } catch (error) {
+    res.send({
+      message: 'User info retrieval failed',
+      success: false,
+    });
+  }
+}
+);
 
 export default router;
