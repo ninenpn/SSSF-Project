@@ -10,6 +10,39 @@
     padding: 15px;
     border-radius: 3px;
     height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    padding: 7px;
+    cursor: pointer;
+}
+
+.menu-item h1 {
+    color: white !important;
+}
+
+.active-menu-item {
+    border: 2px solid var(--secondary);
+    border-radius: 3px;
+    color: var(--secondary) !important;
+    padding: 5px 10px;
+}
+
+.active-menu-item h1 {
+    color: var(--secondary) !important;
 }
 
 .body {
