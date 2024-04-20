@@ -1,8 +1,12 @@
 .card {
-    background-color: white;
+    background-color: rgb(255, 255, 255);
     box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 table {
     border: 1px solid #c9c7c7;
+}
+
+.br-3 {
+    border-radius: 3px;
 }

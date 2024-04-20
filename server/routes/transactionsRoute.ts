@@ -61,4 +61,23 @@ router.post('/verify-account', authMiddleware, async (req: Request, res: Respons
     }
 });
 
+// Route for fetching all transactions by user
+router.post('/get-all-transactions-by-user', authMiddleware, async (req: Request, res: Response) => {
+    try {
+        const transactions = await Transaction.find({
+            $or: [{ sender: req.body.userId }, { receiver: req.body.userId }],
+        }).sort({ createdAt: -1 });
+        res.status(200).json({
+            message: 'Transactions fetched successfully',
+            data: transactions,
+            success: true,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Failed to fetch transactions',
+            success: false,
+        });
+    }
+});
+
 export default router;
