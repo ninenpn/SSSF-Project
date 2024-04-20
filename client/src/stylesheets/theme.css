@@ -22,3 +22,16 @@
 .text-black {
     color: black !important;
 }
+
+.success-bg {
+    background-color: #6fd19e !important;
+    color: white !important;
+    padding: 10px;
+    border-radius: 3px;
+}
+.error-bg {
+    background-color: #ff4d4d !important;
+    color: white !important;
+    padding: 10px;
+    border-radius: 3px;
+}
