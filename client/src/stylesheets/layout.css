@@ -7,7 +7,7 @@
 
 .sidebar {
     background-color: var(--primary);
-    padding: 15px;
+    padding: 10px;
     border-radius: 3px;
     height: 100%;
     display: flex;
@@ -35,8 +35,6 @@
 }
 
 .active-menu-item {
-    border: 2px solid var(--secondary);
-    border-radius: 3px;
     color: var(--secondary) !important;
     padding: 5px 10px;
 }
@@ -57,5 +55,5 @@
 }
 
 .content {
-    padding: 15px;
+    padding-top: 15px;
 }
