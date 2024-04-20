@@ -6,7 +6,7 @@ import User from '../models/userModel';
 const router = express.Router();
 
 // Route for transferring funds
-router.post('/transfer-fund', authMiddleware, async (req: Request, res: Response) => {
+router.post('/transfer-funds', authMiddleware, async (req: Request, res: Response) => {
     try {
         const newTransaction = new Transaction(req.body);
         await newTransaction.save();

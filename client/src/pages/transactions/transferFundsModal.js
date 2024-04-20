@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Modal, Form } from "antd";
-import { useDispatch } from "react-redux";
+import { Modal, Form, message } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import { ShowLoading, HideLoading } from '../../redux/loadersSlice';
-import { VerifyAccount } from '../../apicalls/transactions';
+import { TransferFunds, VerifyAccount } from '../../apicalls/transactions';
 
 function TransferFundsModal({ showtransferFundsModal, setShowtransferFundsModal, reloadData }) {
-    const [isVerified, setIsVerified] = useState('');
+    const {user} = useSelector(state => state.users);
+    const [isVerified, setIsVerified] = React.useState('');
     const [form] = Form.useForm();
     const dispatch = useDispatch();
 
@@ -28,6 +29,29 @@ function TransferFundsModal({ showtransferFundsModal, setShowtransferFundsModal,
         }
     };
 
+    const onFinish = async (values) => {
+        try {
+            dispatch(ShowLoading());
+            const payload = {
+                ...values,
+                sender: user._id,
+                status: "success",
+                reference: values.reference || "no reference"
+            };
+            const response = await TransferFunds(payload);
+            if (response.success) {
+                setShowtransferFundsModal(false);
+                message.success(response.message);
+            } else {
+                message.error(response.message);
+            }
+            dispatch(HideLoading());
+        } catch (error) {
+            message.error(error.message);
+            dispatch(HideLoading());
+        }
+    };
+
     const handleCancel = () => {
         setShowtransferFundsModal(false); // Close the modal
     };
@@ -40,7 +64,7 @@ function TransferFundsModal({ showtransferFundsModal, setShowtransferFundsModal,
                 onCancel={handleCancel}
                 footer={null}
             >
-                <Form layout="vertical" form={form}>
+                <Form layout="vertical" form={form} onFinish={onFinish}>
                     <div className="flex gap-2 items-center">
                         <Form.Item label="Account Number" name="receiver" className="w-100">
                             <input type="text" />
@@ -60,17 +84,21 @@ function TransferFundsModal({ showtransferFundsModal, setShowtransferFundsModal,
                         </div>
                     )}
 
-                    <Form.Item label="Amount" name="amount">
-                        <input type="text" />
+                    <Form.Item label="Amount" name="amount"
+                        rules={[{ required: true, message: "Please input the amount" }, {max: user.balance, message: "Insufficient funds"}]}
+                    >
+                        <input type="number" 
+                        max={user.balance}
+                        />
                     </Form.Item>
 
-                    <Form.Item label="Description" name="description">
+                    <Form.Item label="Reference" name="reference">
                         <textarea type="text" />
                     </Form.Item>
 
                     <div className="flex justify-end gap-1">
-                        <button className="secondary-outlined-btn" onClick={handleCancel}>Cancel</button>
-                        <button className="primary-contained-btn">Transfer</button>
+                        <button className="primary-outlined-btn" onClick={handleCancel}>Cancel</button>
+                        {isVerified === "true" && (<button className="primary-contained-btn" type="submit">Transfer</button>)}
                     </div>
                 </Form>
             </Modal>
