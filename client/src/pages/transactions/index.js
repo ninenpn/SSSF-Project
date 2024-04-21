@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import PageTitle from "../../components/PageTitle";
 import { Table, message } from "antd";
 import TransferFundsModal from "./transferFundsModal";
+import DepositModal from "./depositModal";
 import { useDispatch, useSelector } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 import { GetTransactionsOfUser } from "../../apicalls/transactions";
@@ -9,9 +10,10 @@ import moment from "moment";
 
 function Transactions() {
     const [showtransferFundsModal, setShowtransferFundsModal] = React.useState(false);
+    const [showDepositModal, setShowDepositModal] = React.useState(false);
     const [data = [], setData] = React.useState([{}]);
     const dispatch = useDispatch();
-    const user = useSelector(state => state.users);
+    const user = useSelector(state => state.users.user);
     const columns = [
         {
             title: 'Date',
@@ -29,7 +31,11 @@ function Transactions() {
         {
             title: 'Type',
             dataIndex: 'type',
-            render: (text, record) => {return record.sender === user._id ? 'Sent' : 'Received'}
+            render: (text, record) => {
+                if (record.sender === record.receiver) {return 'Deposit'}
+                else if (record.sender === user._id) {return 'Sent'}
+                else {return 'Received'}
+        },
         },
         {
             title: 'Account',
@@ -69,7 +75,9 @@ function Transactions() {
             <PageTitle title="Transactions" />
 
             <div className="flex gap-1">
-                <button className="primary-outlined-btn">Deposit</button>
+                <button className="primary-outlined-btn" 
+                    onClick={() => setShowDepositModal(true)}
+                >Deposit</button>
                 <button className="primary-contained-btn"
                     onClick={() => setShowtransferFundsModal(true)}
                 >Transfer</button>
@@ -82,6 +90,14 @@ function Transactions() {
             <TransferFundsModal 
                 showtransferFundsModal={showtransferFundsModal}
                 setShowtransferFundsModal={setShowtransferFundsModal}
+                reloadData={getData}
+            />)}
+
+            {showDepositModal && (
+            <DepositModal 
+                showDepositModal={showDepositModal}
+                setShowDepositModal={setShowDepositModal}
+                reloadData={getData}
             />)}
     </div>
     );

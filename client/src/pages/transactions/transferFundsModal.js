@@ -40,6 +40,7 @@ function TransferFundsModal({ showtransferFundsModal, setShowtransferFundsModal,
             };
             const response = await TransferFunds(payload);
             if (response.success) {
+                reloadData();
                 setShowtransferFundsModal(false);
                 message.success(response.message);
             } else {

@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import authMiddleware from '../middlewares/authMiddleware';
 import Transaction from '../models/transactionsModel';
 import User from '../models/userModel';
+import stripe from 'stripe';
+import { v4 as uuid } from 'uuid';
 
 const router = express.Router();
 
@@ -76,6 +78,66 @@ router.post('/get-all-transactions-by-user', authMiddleware, async (req: Request
         res.status(500).json({
             message: 'Failed to fetch transactions',
             success: false,
+        });
+    }
+});
+
+//Deposit funds using stripe
+const stripeKey = process.env.stripe_key;
+
+if (!stripeKey) {
+    throw new Error('Stripe secret key not found in environment variables.');
+}
+
+const stripeClient = new stripe.Stripe(stripeKey);
+
+router.post('/deposit-funds', authMiddleware, async (req: Request, res: Response) => {
+    try {
+        const { token, amount } = req.body;
+
+        const customer = await stripeClient.customers.create({
+            email: token.email,
+            source: token.id
+        });
+
+        const charge = await stripeClient.charges.create({
+            amount: amount,
+            currency: 'usd',
+            customer: customer.id,
+            receipt_email: token.email,
+            description: 'Deposit funds to wallet'
+        }, {
+            idempotencyKey: uuid()
+        });
+
+        if (charge.status === 'succeeded') {
+            const newTransaction = new Transaction({
+                sender: req.body.userId,
+                receiver: req.body.userId, // Assuming self-deposit
+                amount: amount,
+                type: 'deposit',
+                reference: 'Card Deposit',
+                status: 'completed'
+            });
+            await newTransaction.save();
+
+            await User.findByIdAndUpdate(req.body.userId, {
+                $inc: { balance: amount }
+            });
+            res.status(201).json({
+                message: 'Deposit successful',
+                data: newTransaction,
+                success: true
+            });
+        } else {
+            throw new Error('Payment processing failed');
+        }
+
+    } catch (error: any) {
+        console.error('Deposit failed:', error);
+        res.status(400).json({
+            message: error.message || 'Deposit failed',
+            success: false
         });
     }
 });
