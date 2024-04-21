@@ -3,10 +3,10 @@ import { Modal, Form, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { ShowLoading, HideLoading } from '../../redux/loadersSlice';
 import { TransferFunds, VerifyAccount } from '../../apicalls/transactions';
+import { SentRequest } from "../../apicalls/requests";
 
-function TransferFundsModal({ showtransferFundsModal, setShowtransferFundsModal, reloadData }) {
+function NewRequsetModal({ showNewRequestModal, setShowNewRequestModal, reloadData }) {
     const {user} = useSelector(state => state.users);
-    console.log(user.balance);
     const [isVerified, setIsVerified] = React.useState('');
     const [form] = Form.useForm();
     const dispatch = useDispatch();
@@ -39,10 +39,10 @@ function TransferFundsModal({ showtransferFundsModal, setShowtransferFundsModal,
                 status: "success",
                 reference: values.reference || "no reference"
             };
-            const response = await TransferFunds(payload);
+            const response = await SentRequest(payload);
             if (response.success) {
                 reloadData();
-                setShowtransferFundsModal(false);
+                setShowNewRequestModal(false);
                 message.success(response.message);
             } else {
                 message.error(response.message);
@@ -55,14 +55,14 @@ function TransferFundsModal({ showtransferFundsModal, setShowtransferFundsModal,
     };
 
     const handleCancel = () => {
-        setShowtransferFundsModal(false); // Close the modal
+        setShowNewRequestModal(false); // Close the modal
     };
 
     return (
         <div>
             <Modal
                 title="Transfer Funds"
-                visible={showtransferFundsModal} // Correct prop name
+                visible={showNewRequestModal} // Correct prop name
                 onCancel={handleCancel}
                 footer={null}
             >
@@ -94,13 +94,13 @@ function TransferFundsModal({ showtransferFundsModal, setShowtransferFundsModal,
                         />
                     </Form.Item>
 
-                    <Form.Item label="Reference" name="reference">
+                    <Form.Item label="Description" name="description">
                         <textarea type="text" />
                     </Form.Item>
 
                     <div className="flex justify-end gap-1">
                         <button className="primary-outlined-btn" onClick={handleCancel}>Cancel</button>
-                        {isVerified === "true" && (<button className="primary-contained-btn" type="submit">Transfer</button>)}
+                        {isVerified === "true" && (<button className="primary-contained-btn" type="submit">Request</button>)}
                     </div>
                 </Form>
             </Modal>
@@ -108,4 +108,4 @@ function TransferFundsModal({ showtransferFundsModal, setShowtransferFundsModal,
     );
 }
 
-export default TransferFundsModal;
+export default NewRequsetModal;

@@ -12,6 +12,7 @@ import Home from "./pages/home";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import Transactions from "./pages/transactions";
+import Requests from "./pages/requests";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/register" element={<PublicRoute><Register /></PublicRoute>} />
           <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/transactions" element={<ProtectedRoute><Transactions /></ProtectedRoute>} />
+          <Route path="/requests" element={<ProtectedRoute><Requests /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
     </div>

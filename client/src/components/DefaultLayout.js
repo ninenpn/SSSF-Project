@@ -20,10 +20,10 @@ function DefaultLayout({children}) {
             path: "/transactions"
         },
         {
-            title: "request",
+            title: "requests",
             icon: <i class="ri-hand-heart-fill"></i>,
-            onClick: () => navigate("/request"),
-            path: "/request"
+            onClick: () => navigate("/requests"),
+            path: "/requests"
         },
         {
             title: "Profile",
