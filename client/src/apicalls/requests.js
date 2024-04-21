@@ -10,10 +10,10 @@ export const GetAllRequestByUser = async() => {
     }
 };
 
-export const SentRequest = async(data) => {
+export const SentRequest = async (data) => {
     try {
-        const data = await axiosInstance.post("/api/requests/send-request");
-        return data;
+        const response = await axiosInstance.post("/api/requests/send-request", data);
+        return response.data;
     } catch (error) {
         return error.response.data;
     }

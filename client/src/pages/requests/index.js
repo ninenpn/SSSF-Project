@@ -1,24 +1,31 @@
 import React, { useEffect } from "react";
-import { Tabs, message } from "antd";
+import { Table, Tabs, message } from "antd";
 import PageTitle from "../../components/PageTitle";
 import NewRequestModal from "./NewRequestModal";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 import { GetAllRequestByUser } from "../../apicalls/requests";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+
 const { TabPane } = Tabs;
 
 const Requests = () => {
     const [data, setData] = React.useState([{}]);
     const [showNewRequestModal, setShowNewRequestModal] = React.useState(false);
     const dispatch = useDispatch();
+    const {user} = useSelector(state=>state.users);
     const columns = [
         {
             title: 'Request ID',
             dataIndex: '_id',
         },
         {
-            title: 'User',
-            dataIndex: 'user',
+            title: 'Sender',
+            dataIndex: 'sender',
+        },
+        {
+            title: 'Receiver',
+            dataIndex: 'receiver',
         },
         {
             title: 'Amount',
@@ -26,11 +33,12 @@ const Requests = () => {
         },
         {
             title: 'Description',
-            dataIndex: 'dscription',
+            dataIndex: 'description',
         },
         {
             title: 'Date',
             dataIndex: 'date',
+            render: (text, record) => {return moment(record.createdAt).format('DD-MM-YYYY, hh:mm:ss A')}
         },
         {
             title: 'Status',
@@ -43,7 +51,12 @@ const Requests = () => {
             dispatch(ShowLoading());
             const response = await GetAllRequestByUser();
             if (response.success) {
-                setData(response.data);
+                const sendData = response.data.filter(item => item.sender === user._id);
+                const ReceivedData = response.data.filter(item => item.receiver === user._id);
+                setData(
+                    {sent: sendData,
+                    received: ReceivedData}
+                );
             }
             dispatch(HideLoading());
         } catch (error) {
@@ -66,8 +79,12 @@ const Requests = () => {
         </div>
 
         <Tabs defaultActiveKey="1">
-            <TabPane tab="Sent" key="1">Sent</TabPane>
-            <TabPane tab="Received" key="2">Received</TabPane>
+            <TabPane tab="Sent" key="1">
+                <Table columns={columns} dataSource={data.sent} />
+            </TabPane>
+            <TabPane tab="Received" key="2">
+                <Table columns={columns} dataSource={data.received} />
+            </TabPane>
         </Tabs>
 
         {showNewRequestModal && (

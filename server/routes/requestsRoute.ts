@@ -5,20 +5,19 @@ import authMiddleware from '../middlewares/authMiddleware';
 const router = express.Router();
 
 // Fetch all requests by sender or receiver
-router.post('/get-all-requests-by-user', authMiddleware, async (req: Request, res: Response) => {
+router.post('/get-all-request-by-user', authMiddleware, async (req: Request, res: Response) => {
     try {
-        const requests = await RequestModel.find({
-            $or: [{ sender: req.body.userId }, { receiver: req.body.userId }],
-        }).sort({ createdAt: -1 });
+        const requests = await RequestModel.find({ sender: req.body.userId });
         res.status(200).json({
-            message: 'requests fetched successfully',
+            message: 'Requests fetched successfully',
             data: requests,
             success: true,
         });
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({
             message: 'Failed to fetch requests',
             success: false,
+            error: error.message,
         });
     }
 });
