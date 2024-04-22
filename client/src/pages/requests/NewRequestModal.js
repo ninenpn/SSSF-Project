@@ -13,7 +13,6 @@ const NewRequestModal = ({ showNewRequestModal, setShowNewRequestModal, reloadDa
         try {
             const response = await SentRequest(values);
             if (response.success) {
-                reloadData();
                 message.success(response.message || 'Request sent successfully');
                 setShowNewRequestModal(false);
             } else {
