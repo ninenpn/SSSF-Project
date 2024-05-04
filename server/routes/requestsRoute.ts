@@ -7,13 +7,20 @@ const router = express.Router();
 // Fetch all requests by sender or receiver
 router.post('/get-all-request-by-user', authMiddleware, async (req: Request, res: Response) => {
     try {
-        const requests = await RequestModel.find({ sender: req.body.userId });
+        const userId = req.body.userId;
+
+        const requests = await RequestModel.find({
+            $or: [{ sender: userId }, { receiver: userId }],
+        })
+        .sort({ createdAt: -1 });
+
         res.status(200).json({
             message: 'Requests fetched successfully',
             data: requests,
             success: true,
         });
     } catch (error: any) {
+        console.error('Failed to fetch requests:', error);
         res.status(500).json({
             message: 'Failed to fetch requests',
             success: false,
