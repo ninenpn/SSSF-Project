@@ -15,6 +15,7 @@ const NewRequestModal = ({ showNewRequestModal, setShowNewRequestModal, reloadDa
             if (response.success) {
                 message.success(response.message || 'Request sent successfully');
                 setShowNewRequestModal(false);
+                reloadData();
             } else {
                 message.error(response.message || 'Failed to send request');
             }

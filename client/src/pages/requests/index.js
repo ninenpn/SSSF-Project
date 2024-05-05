@@ -6,6 +6,7 @@ import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 import { GetAllRequestByUser, UpdateRequestStatus } from "../../apicalls/requests";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import { ReloadUser } from "../../redux/usersSlice";
 
 const { TabPane } = Tabs;
 
@@ -16,15 +17,22 @@ const Requests = () => {
     const {user} = useSelector(state=>state.users);
     const updateStatus = async(record, status) => {
         try {
-            dispatch(ShowLoading());
-            const response = await UpdateRequestStatus({...record, status});
-            dispatch(HideLoading());
-            if (response.success) {
-                message.success(response.message);
-                getData();
+            if(status === 'accepted' && record.amount > user.balance) {
+                message.error("Insufficient balance");
+                return;
             } else {
-                message.error(response.message);
+                dispatch(ShowLoading());
+                const response = await UpdateRequestStatus({...record, status});
+                dispatch(HideLoading());
+                if (response.success) {
+                    message.success(response.message);
+                    getData();
+                    dispatch(ReloadUser(true));
+                } else {
+                    message.error(response.message);
+                }
             }
+           
         } catch (error) {
             dispatch(HideLoading());
             message.error(error.message);
