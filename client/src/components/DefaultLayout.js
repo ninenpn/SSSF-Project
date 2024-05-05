@@ -26,12 +26,6 @@ function DefaultLayout({children}) {
             path: "/requests"
         },
         {
-            title: "Profile",
-            icon: <i class="ri-user-4-fill"></i>,
-            onClick: () => navigate("/profile"),
-            path: "/profile"
-        },
-        {
             title: "Logout",
             icon: <i class="ri-logout-circle-r-line"></i>,
             onClick: () => {
@@ -63,14 +57,8 @@ function DefaultLayout({children}) {
         {
             title: "request",
             icon: <i class="ri-hand-heart-fill"></i>,
-            onClick: () => navigate("/request"),
-            path: "/request"
-        },
-        {
-            title: "Profile",
-            icon: <i class="ri-user-4-fill"></i>,
-            onClick: () => navigate("/profile"),
-            path: "/profile"
+            onClick: () => navigate("/requests"),
+            path: "/requests"
         },
         {
             title: "Logout",

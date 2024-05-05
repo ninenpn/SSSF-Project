@@ -102,6 +102,14 @@ router.post('/login', async (req: Request, res: Response) => {
           success: false,
         });
       }
+
+      // Check if user is verified
+      if (!user.isVerified) {
+        return res.status(400).json({
+          message: 'User is not verified or suspended',
+          success: false,
+        });
+      }
   
       // Generate JWT token for authentication
       const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET!, { expiresIn: '1d' });
@@ -147,5 +155,41 @@ router.post('/get-user-info', middlewares, async (req: Request, res: Response) =
   }
 }
 );
+
+// get all users
+router.get('/get-all-users', middlewares, async (req: Request, res: Response) => {
+  try {
+    const users = await User.find();
+      res.send({
+        message: 'Users retrieved successfully',
+        data: users,
+        success: true,
+      });
+  } catch (error) {
+    res.send({
+      message: 'User retrieval failed',
+      success: false,
+    });
+  }
+}
+);
+
+// update user verification status
+router.post('/update-user-verified-status', middlewares, async (req: Request, res: Response) => {
+  try {
+    await User.findByIdAndUpdate(req.body.selectedUser, {isVerified: req.body.isVerified});
+    res.send({
+      data: null,
+      message: 'User verification status updated successfully',
+      success: true,
+    });
+  } catch (error) {
+    res.send({
+      data: error,
+      message: 'User verification status update failed',
+      success: false,
+    });
+  }
+});
 
 export default router;
