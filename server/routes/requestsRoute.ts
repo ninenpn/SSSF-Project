@@ -1,6 +1,9 @@
 import express, { Request, Response } from 'express';
 import RequestModel from '../models/requestsModel';
 import authMiddleware from '../middlewares/authMiddleware';
+import request from '../models/requestsModel';
+import User from '../models/userModel';
+import Transaction from '../models/transactionsModel';
 
 const router = express.Router();
 
@@ -54,6 +57,38 @@ router.post('/send-request', authMiddleware, async (req: Request, res: Response)
             message: 'Failed to send request',
             success: false,
             error: error.message
+        });
+    }
+});
+
+// Update request status
+router.post('/update-request-status', authMiddleware, async (req: Request, res: Response) => {
+    try {
+        if(req.body.status === 'accepted') {
+            const transaction = new Transaction({
+                sender: req.body.receiver,
+                receiver: req.body.sender,
+                amount: req.body.amount,
+                reference: req.body.description,
+                status: 'completed'
+            });
+            await transaction.save();
+            
+            await User.findByIdAndUpdate(req.body.sender, {$inc: {balance: req.body.amount}});
+            await User.findByIdAndUpdate(req.body.receiver, {$inc: {balance: -req.body.amount}});
+        }
+            await request.findByIdAndUpdate(req.body._id, {status: req.body.status});
+
+        res.send({
+            data: null,
+            message: 'Request status updated successfully',
+            success: true
+        });
+    } catch (error: any) {
+        res.send({
+            data: error,
+            message: 'Failed to update request status',
+            success: false
         });
     }
 });

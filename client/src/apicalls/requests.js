@@ -1,5 +1,4 @@
 import { axiosInstance } from ".";
-import Requests from "../pages/requests";
 
 export const GetAllRequestByUser = async() => {
     try {
@@ -14,6 +13,15 @@ export const SentRequest = async (data) => {
     try {
         const response = await axiosInstance.post("/api/requests/send-request", data);
         return response.data;
+    } catch (error) {
+        return error.response.data;
+    }
+};
+
+export const UpdateRequestStatus = async (request) => {
+    try {
+        const {data} = await axiosInstance.post("/api/requests/update-request-status", request);
+        return data;
     } catch (error) {
         return error.response.data;
     }
