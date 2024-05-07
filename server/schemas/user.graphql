@@ -1,0 +1,59 @@
+scalar Date
+    
+type MyType {
+    created: Date
+}
+
+type User {
+    id: ID!
+    firstName: String!
+    lastName: String!
+    username: String!
+    dob: Date!
+    email: String!
+    phoneNumber: String!
+    IDType: String!
+    IDNumber: String!
+    address: String!
+    country: String!
+    city: String!
+    password: String!
+}
+
+type Query {
+    users: [User!]!
+    user(id: ID!): User
+}
+
+type Mutation {
+    createUser(
+        firstName: String!
+        lastName: String!
+        username: String!
+        dob: Date!
+        email: String!
+        phoneNumber: String!
+        IDType: String!
+        IDNumber: String!
+        address: String!
+        country: String!
+        city: String!
+        password: String!
+    ): User!
+    updateUser(
+        id: ID!
+        firstName: String!
+        lastName: String!
+        username: String!
+        dob: Date!
+        email: String!
+        phoneNumber: String!
+        IDType: String!
+        IDNumber: String!
+        address: String!
+        country: String!
+        city: String!
+        password: String!
+    ): User!
+    deleteUser(id: ID!): User!
+}

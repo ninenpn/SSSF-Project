@@ -83,6 +83,7 @@ router.post('/get-all-transactions-by-user', authMiddleware, async (req: Request
 });
 
 //Deposit funds using stripe
+require('dotenv').config();
 const stripeKey = process.env.stripe_key;
 
 if (!stripeKey) {
