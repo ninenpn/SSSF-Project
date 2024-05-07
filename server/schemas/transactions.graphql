@@ -1,0 +1,32 @@
+type Transaction {
+    id: ID!
+    amount: Float!
+    sender: User!
+    receiver: User!
+    reference: String!
+    status: String!
+}
+
+type Query {
+    transactions: [Transaction!]!
+    transaction(id: ID!): Transaction
+}
+
+type Mutation {
+    createTransaction(
+        amount: Float!
+        sender: ID!
+        receiver: ID!
+        reference: String!
+        status: String!
+    ): Transaction!
+    updateTransaction(
+        id: ID!
+        amount: Float!
+        sender: ID!
+        receiver: ID!
+        reference: String!
+        status: String!
+    ): Transaction!
+    deleteTransaction(id: ID!): Transaction!
+}

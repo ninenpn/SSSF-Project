@@ -1,0 +1,32 @@
+type Request {
+    id: ID!
+    sender: User!
+    receiver: User!
+    amount: Float!
+    description: String!
+    status: String!
+}
+
+type Query {
+    requests: [Request!]!
+    request(id: ID!): Request
+}
+
+type Mutation {
+    createRequest(
+        sender: ID!
+        receiver: ID!
+        amount: Float!
+        description: String!
+        status: String!
+    ): Request!
+    updateRequest(
+        id: ID!
+        sender: ID!
+        receiver: ID!
+        amount: Float!
+        description: String!
+        status: String!
+    ): Request!
+    deleteRequest(id: ID!): Request!
+}

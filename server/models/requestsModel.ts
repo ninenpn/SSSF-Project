@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 const requestSchema = new mongoose.Schema({
     sender: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: "User",
     },
     receiver: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
+        ref: "User",
     },
     amount: {
         type: Number,
