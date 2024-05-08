@@ -9,24 +9,9 @@ type Request {
 
 type Query {
     requests: [Request!]!
-    request(id: ID!): Request
+    requestsById(id: ID!): Request
 }
 
 type Mutation {
-    createRequest(
-        sender: ID!
-        receiver: ID!
-        amount: Float!
-        description: String!
-        status: String!
-    ): Request!
-    updateRequest(
-        id: ID!
-        sender: ID!
-        receiver: ID!
-        amount: Float!
-        description: String!
-        status: String!
-    ): Request!
     deleteRequest(id: ID!): Request!
 }

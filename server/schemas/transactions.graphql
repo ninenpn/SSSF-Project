@@ -9,24 +9,9 @@ type Transaction {
 
 type Query {
     transactions: [Transaction!]!
-    transaction(id: ID!): Transaction
+    transactionById(id: ID!): Transaction
 }
 
 type Mutation {
-    createTransaction(
-        amount: Float!
-        sender: ID!
-        receiver: ID!
-        reference: String!
-        status: String!
-    ): Transaction!
-    updateTransaction(
-        id: ID!
-        amount: Float!
-        sender: ID!
-        receiver: ID!
-        reference: String!
-        status: String!
-    ): Transaction!
     deleteTransaction(id: ID!): Transaction!
 }

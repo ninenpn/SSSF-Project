@@ -22,7 +22,7 @@ type User {
 
 type Query {
     users: [User!]!
-    user(id: ID!): User
+    userById(id: ID!): User
 }
 
 type Mutation {
@@ -45,14 +45,8 @@ type Mutation {
         firstName: String!
         lastName: String!
         username: String!
-        dob: Date!
         email: String!
         phoneNumber: String!
-        IDType: String!
-        IDNumber: String!
-        address: String!
-        country: String!
-        city: String!
         password: String!
     ): User!
     deleteUser(id: ID!): User!
