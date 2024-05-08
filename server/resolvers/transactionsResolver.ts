@@ -4,12 +4,12 @@ import { Transactions } from "../interfaces/Transactions";
 export default {
     Query: {
         transactions: async () => {
-          return await Transaction.find();
+          return await Transaction.find().populate('sender receiver');
         },
     
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         transactionById: async (_parent: undefined, args: any) => {
-          return await Transaction.findById(args.id);
+          return await Transaction.findById(args.id).populate('sender receiver');
         },
       },
     
