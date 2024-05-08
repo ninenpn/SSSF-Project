@@ -13,5 +13,6 @@ type Query {
 }
 
 type Mutation {
+    updateRequest(id: ID!, amount: Float!, description: String!): Request!
     deleteRequest(id: ID!): Request!
 }

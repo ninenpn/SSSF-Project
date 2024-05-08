@@ -13,5 +13,6 @@ type Query {
 }
 
 type Mutation {
+    updateTransaction(id: ID!, amount: Float!, reference: String!): Transaction!
     deleteTransaction(id: ID!): Transaction!
 }

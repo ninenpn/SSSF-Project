@@ -14,6 +14,9 @@ export default {
       },
     
       Mutation: {
+        updateRequest: async (_parent: undefined, args: Requests) => {
+          return await Request.findByIdAndUpdate(args.id, args, { new: true });
+        },
         deleteRequest: async (_parent: undefined, args: Requests) => {
           return await Request.findByIdAndDelete(args.id);
         },

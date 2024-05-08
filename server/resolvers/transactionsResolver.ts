@@ -14,6 +14,9 @@ export default {
       },
     
       Mutation: {
+        updateTransaction: async (_parent: undefined, args: Transactions) => {
+          return await Transaction.findByIdAndUpdate(args.id, args, { new: true });
+        },
         deleteTransaction: async (_parent: undefined, args: Transactions) => {
           return await Transaction.findByIdAndDelete(args.id);
         },
