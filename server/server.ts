@@ -34,6 +34,7 @@ app.get('/', (req: Request, res: Response) => {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  introspection: true,
   plugins: [
     process.env.ENVIRONMENT === 'production'
       ? ApolloServerPluginLandingPageProductionDefault({
