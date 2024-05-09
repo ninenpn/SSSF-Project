@@ -10,7 +10,7 @@ function DefaultLayout({children}) {
         {
             title: "Home",
             icon: <i class="ri-home-line"></i>,
-            onClick: () => navigate("/"),
+            onClick: () => navigate("/home"),
             path: "/home"
         },
         {
