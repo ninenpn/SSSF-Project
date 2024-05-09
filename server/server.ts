@@ -20,7 +20,10 @@ const app: Application = express();
 const PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 5000;
 
 // Enable CORS with default settings
-app.use(cors());
+app.use(cors({
+    origin: '*', // Allow all origins
+    credentials: true, // Allow cookies and other credentials
+  }));
 
 // Support parsing of application/json type post data
 app.use(express.json());
@@ -74,7 +77,7 @@ if (process.env.NODE_ENV === 'production') {
             next();
         }
     });
-}
+} 
 
 // Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
