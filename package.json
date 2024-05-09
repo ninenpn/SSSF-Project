@@ -3,15 +3,14 @@
   "version": "1.0.0",
   "main": "server.ts",
   "engines": {
-    "ts-node": "10.9.2",
-    "nodemon": "3.1.0",
+    "node": "21.7.1",
     "npm": "10.5.2"
   },
   "scripts": {
-    "start": "nodemon server/server",
+    "start": "ts-node server/server.ts",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run client\" \"npm start\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client &&  npm run build --prefix client"
+    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",
@@ -31,7 +30,9 @@
     "mongoose": "^8.3.2",
     "punycode": "^2.3.1",
     "stripe": "^15.3.0",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "nodemon": "^3.1.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
