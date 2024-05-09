@@ -11,7 +11,7 @@ function DefaultLayout({children}) {
             title: "Home",
             icon: <i class="ri-home-line"></i>,
             onClick: () => navigate("/"),
-            path: "/"
+            path: "/home"
         },
         {
             title: "Transactions",
