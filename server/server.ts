@@ -66,8 +66,12 @@ startServer();
 __dirname = path.resolve();
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
-    app.get('*', (req: Request, res: Response) => {
-        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    app.get('*', (req: Request, res: Response, next: NextFunction) => {
+        if (!req.path.startsWith('/api') && !req.path.startsWith('/graphql')) {
+            res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+        } else {
+            next();
+        }
     });
 }
 
