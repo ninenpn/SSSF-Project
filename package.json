@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "main": "server.ts",
   "engines": {
-    "node": "21.7.1",
+    "ts-node": "10.9.2",
+    "nodemon": "3.1.0",
     "npm": "10.5.2"
   },
   "scripts": {
     "start": "nodemon server/server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run client\" \"npm start\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client &&  npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",
