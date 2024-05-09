@@ -11,6 +11,7 @@ import requestsRoutes from './routes/requestsRoute';
 
 // Import database configuration
 import './config/dbconfig';
+import path from 'path';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -60,6 +61,15 @@ app.use('/api/transactions', transactionsRoutes);
 
 // Start the server with Apollo middleware properly initialized
 startServer();
+
+// heroku deployment
+__dirname = path.resolve();
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+    app.get('*', (req: Request, res: Response) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 // Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

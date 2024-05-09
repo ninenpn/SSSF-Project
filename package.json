@@ -2,8 +2,15 @@
   "name": "sssf-project",
   "version": "1.0.0",
   "main": "server.ts",
+  "engines": {
+    "node": "21.7.1",
+    "npm": "10.5.2"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon server/server.ts",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run client\" \"npm start\"",
+    "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "author": "",
   "license": "ISC",
