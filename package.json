@@ -7,7 +7,7 @@
     "npm": "10.5.2"
   },
   "scripts": {
-    "start": "nodemon server/server.ts",
+    "start": "nodemon server/server",
     "client": "npm start --prefix client",
     "dev": "concurrently \"npm run client\" \"npm start\"",
     "build": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
