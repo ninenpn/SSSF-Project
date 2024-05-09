@@ -11,7 +11,7 @@ function Login() {
             if(response.success) {
                 message.success(response.message);
                 localStorage.setItem("token", response.token);
-                window.location.href = "/";
+                window.location.href = "/home";
             }
             else {
                 message.error(response.message);
