@@ -8,7 +8,7 @@ function Home() {
   return (
     <div>
       <PageTitle title={`Welcome ${user.username} to your Wallet!`} />
-      <div className="bg-secondary p-2 mt-2 w-50 br-3 flex flex-col gap-1 uppercase">
+      <div className="bg-secondary p-2 mt-2 w-65 br-3 flex flex-col gap-1 uppercase">
         <div className="flex justify-between">
           <h1 className="text-md">Account Number</h1>
           <h1 className="text-md">{user._id}</h1>
@@ -19,7 +19,7 @@ function Home() {
         </div>
         </div>
 
-        <div className="card p-2 mt-2 w-50 br-3 flex flex-col gap-1 uppercase">
+        <div className="card p-2 mt-2 w-65 br-3 flex flex-col gap-1 uppercase">
           <div className="flex justify-between">
             <h1 className="text-md">First Name</h1>
             <h1 className="text-md">{user.firstName}</h1>

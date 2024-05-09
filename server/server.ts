@@ -1,7 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import helmet from 'helmet';
 import { ApolloServer } from 'apollo-server-express';
 import {
   ApolloServerPluginLandingPageLocalDefault,
@@ -24,8 +23,6 @@ app.use(cors({
     origin: '*', // Consider more restrictive settings in production
     credentials: true,
 }));
-
-app.use(helmet()); // Sets various HTTP headers for security
 
 app.use(express.json());
 
