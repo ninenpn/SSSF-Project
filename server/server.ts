@@ -1,43 +1,42 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import helmet from 'helmet';
 import { ApolloServer } from 'apollo-server-express';
-import { ApolloServerPluginLandingPageLocalDefault, ApolloServerPluginLandingPageProductionDefault } from 'apollo-server-core';
+import {
+  ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault
+} from 'apollo-server-core';
 import typeDefs from './schemas/index';
 import resolvers from './resolvers/index';
 import userRoutes from './routes/userRoutes';
 import transactionsRoutes from './routes/transactionsRoute';
 import requestsRoutes from './routes/requestsRoute';
-
-// Import database configuration
 import './config/dbconfig';
 import path from 'path';
 
-// Load environment variables from .env file
 dotenv.config();
 
 const app: Application = express();
-const PORT: number = process.env.PORT ? parseInt(process.env.PORT) : 5000;
+const PORT: number = parseInt(process.env.PORT, 10) || 5000;
 
-// Enable CORS with default settings
 app.use(cors({
-    origin: '*', // Allow all origins
-    credentials: true, // Allow cookies and other credentials
-  }));
+    origin: '*', // Consider more restrictive settings in production
+    credentials: true,
+}));
 
-// Support parsing of application/json type post data
+app.use(helmet()); // Sets various HTTP headers for security
+
 app.use(express.json());
 
-// Simple health check route
 app.get('/', (req: Request, res: Response) => {
     res.send('Server is running!');
 });
 
-// Set up Apollo Server for GraphQL
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  introspection: true,
+  introspection: true, // Ensure to turn this off or manage wisely in production if needed
   plugins: [
     process.env.ENVIRONMENT === 'production'
       ? ApolloServerPluginLandingPageProductionDefault({
@@ -58,15 +57,10 @@ async function startServer() {
     });
 }
 
-// Routing for API endpoints
 app.use('/api/users', userRoutes);
 app.use('/api/requests', requestsRoutes);
 app.use('/api/transactions', transactionsRoutes);
 
-// Start the server with Apollo middleware properly initialized
-startServer();
-
-// heroku deployment
 __dirname = path.resolve();
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
@@ -79,11 +73,16 @@ if (process.env.NODE_ENV === 'production') {
     });
 } 
 
-// Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.error(`Error at ${req.method} ${req.url}: ${err.message}`);
-    res.status(500).json({
+    console.error(`Error at ${req.method} ${req.url}:`, err);
+    const errorResponse = {
         error: "Internal Server Error",
         message: err.message
-    });
+    };
+    if (process.env.ENVIRONMENT === 'development') {
+        errorResponse['stack'] = err.stack;
+    }
+    res.status(500).json(errorResponse);
 });
+
+startServer();
