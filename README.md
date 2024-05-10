@@ -28,8 +28,12 @@ This app is suited for:
 - Students, professionals, and families who need to manage their finances effectively and securely.
 
 ## Working Project
-[Frontend](https://sssf-project-3834f9021ba7.herokuapp.com/home "Frontend")
-[backend (sandbox)](https://studio.apollographql.com/public/Noppanun-Pornwattanayingkul/variant/current/explorer "Graphql Sandbox")
+
+- **Frontend:** Access the live version of the frontend application by clicking the link below. It demonstrates the user interface and interactions with the application.
+  [Frontend Application](https://sssf-project-3834f9021ba7.herokuapp.com/home "Frontend")
+
+- **Backend (Sandbox):** Explore the backend functionalities through the GraphQL sandbox. This allows you to run queries and mutations directly against the backend services.
+  [GraphQL Sandbox](https://studio.apollographql.com/public/Noppanun-Pornwattanayingkul/variant/current/explorer "Graphql Sandbox")
 
 ## Getting Started
 
