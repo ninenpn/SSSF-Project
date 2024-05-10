@@ -27,6 +27,10 @@ This app is suited for:
 - Individuals seeking efficient, digital solutions for financial management.
 - Students, professionals, and families who need to manage their finances effectively and securely.
 
+## Working Project
+[Frontend](https://sssf-project-3834f9021ba7.herokuapp.com/home "Frontend")
+[backend (sandbox)](https://studio.apollographql.com/public/Noppanun-Pornwattanayingkul/variant/current/explorer "Graphql Sandbox")
+
 ## Getting Started
 
 ### Installing
