@@ -66,6 +66,9 @@ npm start
 
 Access the application through your web browser at `http://localhost:3000`.
 
+## Demo
+[Watch the Demo Video](https://drive.google.com/file/d/11r02jRe2L5AnlWeFPXOlb6ljco9tTuLW/view?usp=sharing "Watch the Demo")
+
 ## Usage
 
 ### For Users
