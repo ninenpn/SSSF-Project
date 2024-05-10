@@ -74,6 +74,28 @@ npm start
 
 Access the application through your web browser at `http://localhost:3000`.
 
+## Testing
+
+To test the application, follow the steps below:
+
+### For Users
+1. **Registration and Login:** Start by registering a new account on the platform. After registration, log in using your credentials.
+2. **Deposit Funds:** To deposit funds, navigate to the 'Deposit' section. Use the following test card details from Stripe for testing payments:
+   - **Card Number:** `4242 4242 4242 4242`
+   - **CVV:** Any 3 digits
+   - **Expiration Date:** Any future date
+   [Stripe Testing Documentation](https://docs.stripe.com/testing?testing-method=card-numbers)
+3. **Transfer Money:** Once you have funds, you can transfer money to other users by navigating to the 'Transfer' section.
+4. **Request Money:** Use the 'Request' feature to ask other users for money.
+
+### For Admins
+1. **Admin Login:** Use the following credentials to log in as an administrator:
+   - **Email:** `admin@mail.com`
+   - **Password:** `123456`
+2. **Verify and Suspend Users:** As an admin, you can verify new users and suspend accounts as needed.
+
+This setup allows you to thoroughly test both user and admin functionalities within the application.
+
 ## Demo
 [Watch the Demo Video](https://drive.google.com/file/d/11r02jRe2L5AnlWeFPXOlb6ljco9tTuLW/view?usp=sharing "Watch the Demo")
 
